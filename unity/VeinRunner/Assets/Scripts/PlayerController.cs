@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,12 +19,16 @@ public class PlayerController : MonoBehaviour
 
     public int curHealth;
 
+    private GameObject healthTextObject;
+
     private float startXPos;
     // Start is called before the first frame update
     void Start()
     {
         startXPos = transform.position.x;
         curHealth = startHealth;
+
+        healthTextObject = GameObject.FindGameObjectsWithTag("HealthDisplay")[0];
     }
 
     // Update is called once per frame
@@ -54,14 +61,23 @@ public class PlayerController : MonoBehaviour
     public void AddHealth(int health)
     {
         curHealth += health;
+
+        healthTextObject.GetComponent<TMPro.TextMeshProUGUI>().SetText("Health: " + curHealth);
     }
 
     /// <summary>
     /// Removes the given health from the players current health
     /// </summary>
     /// <param name="health">Health which get removed</param>
-    public void RemoveHealth(int health) 
+    public void RemoveHealth(int health)
     {
         curHealth -= health;
+
+        healthTextObject.GetComponent<TMPro.TextMeshProUGUI>().SetText("Health: " + curHealth);
+
+        if(curHealth <= 0)
+        {
+            SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
+        }
     }
 }
