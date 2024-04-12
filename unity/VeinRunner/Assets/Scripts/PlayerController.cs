@@ -12,12 +12,16 @@ public class PlayerController : MonoBehaviour
 
     public int curX = 0;
     public int movementSpeed = 100;
+    public int startHealth = 5;
+
+    public int curHealth;
 
     private float startXPos;
     // Start is called before the first frame update
     void Start()
     {
         startXPos = transform.position.x;
+        curHealth = startHealth;
     }
 
     // Update is called once per frame
@@ -41,5 +45,23 @@ public class PlayerController : MonoBehaviour
                 targetPos = new Vector2(transform.position.x - XIncrement, transform.position.y);
             }
         }
+    }
+
+    /// <summary>
+    /// Adds the given health to the players current health
+    /// </summary>
+    /// <param name="health">health which will get added</param>
+    public void AddHealth(int health)
+    {
+        curHealth += health;
+    }
+
+    /// <summary>
+    /// Removes the given health from the players current health
+    /// </summary>
+    /// <param name="health">Health which get removed</param>
+    public void RemoveHealth(int health) 
+    {
+        curHealth -= health;
     }
 }
