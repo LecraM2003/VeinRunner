@@ -5,6 +5,7 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
     public float speed = 15;
+    public int damage = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -22,4 +23,15 @@ public class Obstacle : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void OnTriggerEnter2D(Collider2D collision) //if collision to player happens
+    {
+        if (collision.CompareTag("Player"))
+        {
+            //player takes damage
+            collision.GetComponent<PlayerController>().RemoveHealth(damage); //damage player
+            Destroy(gameObject); //destroy itself (obstacle)
+        }
+    }
+
 }
