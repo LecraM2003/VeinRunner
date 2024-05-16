@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curX: 0
-  movementSpeed: 100
+  movementSpeed: 12
   startHealth: 5
   curHealth: 0
 --- !u!61 &5664627636976683133
