@@ -40,13 +40,13 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if ((Input.GetKeyDown(KeyCode.RightArrow)) && curX < maxX)
+            if ((Input.GetKey(KeyCode.RightArrow)) && curX < maxX)
             {
                 curX++;
                 targetPos = new Vector2(transform.position.x + XIncrement, transform.position.y);
 
             }
-            else if ((Input.GetKeyDown(KeyCode.LeftArrow)) && curX > minX)
+            else if ((Input.GetKey(KeyCode.LeftArrow)) && curX > minX)
             {
                 curX--;
                 targetPos = new Vector2(transform.position.x - XIncrement, transform.position.y);
