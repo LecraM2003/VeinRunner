@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     private GameObject healthTextObject;
 
+    public AudioSource hitSound;
+
     private float startXPos;
     // Start is called before the first frame update
     void Start()
@@ -66,13 +68,13 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Removes the given health from the players current health
+    /// Removes the given health from the players current health. Displays the new health and plays the hit sound.
     /// </summary>
     /// <param name="health">Health which get removed</param>
     public void RemoveHealth(int health)
     {
         curHealth -= health;
-
+        hitSound.Play();
         healthTextObject.GetComponent<TMPro.TextMeshProUGUI>().SetText("Health: " + curHealth);
 
         if(curHealth <= 0)
