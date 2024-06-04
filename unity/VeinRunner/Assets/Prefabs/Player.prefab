@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1388657328263943427}
   - component: {fileID: 8082824060208520850}
   - component: {fileID: 4070176125850796390}
-  - component: {fileID: 5664627636976683133}
+  - component: {fileID: 4230457912222757308}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -164,8 +164,8 @@ MonoBehaviour:
   startHealth: 5
   curHealth: 0
   hitSound: {fileID: 8185722288326785740}
---- !u!61 &5664627636976683133
-BoxCollider2D:
+--- !u!58 &4230457912222757308
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -197,18 +197,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -6.950803, y: -2.974371}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.1949902, y: 2.6223857}
-  m_EdgeRadius: 0
+  m_Radius: 1.4
 --- !u!1001 &6481537167469306466
 PrefabInstance:
   m_ObjectHideFlags: 0
