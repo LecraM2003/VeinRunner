@@ -9,38 +9,96 @@ public class Spawner : MonoBehaviour
 
     public GameObject obstacleObject;
 
-    public int mindelay = 500;
+    public GameObject bonusObject;
 
-    int curTime;
+    int obstacle_curTime;
+
+    int bonus_curTime;
+
+    int how_many = 0;
+
+    int how_many_done = 0;
+
+    int force_lane = -1;
 
     void Start()
     {
-        curTime = 0;
+        obstacle_curTime = 0;
+        bonus_curTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        curTime++;
+        this.spawnGameObject(obstacleObject, ref obstacle_curTime, 500, 90);
 
-        if (curTime >= mindelay)
+        if (how_many == 0)
+        {
+            how_many = Random.Range(1, 5);
+        }
+        this.spawnGameObject(bonusObject, ref bonus_curTime, 60, 50, true);
+    }
+
+    void spawnGameObject(GameObject gameObject, ref int cur_time, int mindelay, int min_chance, bool multi = false)
+    {
+        cur_time++;
+
+        if (multi && how_many_done >= 1)
+        {
+            // decrease vertical gap within groups
+            mindelay = 3;
+        }
+
+        if (cur_time >= mindelay)
         {
             int randShouldSpawn = Random.Range(1, 100);
 
-            if (randShouldSpawn < 90)
+            if (randShouldSpawn < min_chance)
             {
+                GameObject spawnPoint;
+                int tries = 0;      // safety pin to prevent deadlocks
+                int randSpawnpoint;
+                do
+                {
+                    if (multi && force_lane > -1)
+                    {
+                        randSpawnpoint = force_lane;
+                    }
+                    else
+                    {
+                        randSpawnpoint = Random.Range(0, spawnPoints.transform.childCount);
+                    }
+                    
+                    if (multi && how_many > 1 && how_many_done == 0)
+                    {
+                        force_lane = randSpawnpoint;
+                    }
 
+                    spawnPoint = spawnPoints.transform.GetChild(randSpawnpoint).gameObject;
+                    tries++;
+                }
+                while ((!multi || force_lane < 0) && spawnPoint.GetComponent<SpawnPoint>().isLocked() && tries < 10);
+                tries = 0;
 
-                int randSpawnpoint = Random.Range(0, spawnPoints.transform.childCount);
+                spawnPoint.GetComponent<SpawnPoint>().lockPoint();
 
-                GameObject spawnPoint = spawnPoints.transform.GetChild(randSpawnpoint).gameObject;
+                if (multi)
+                {
+                    how_many_done++;
 
-                Instantiate(obstacleObject, spawnPoint.transform.position, Quaternion.identity); //create that obstacle
+                    if (how_many_done >= how_many)
+                    {
+                        how_many = 0;
+                        how_many_done = 0;
+                        force_lane = -1;
+                    }
+                }
 
+                Instantiate(gameObject, spawnPoint.transform.position, Quaternion.identity); //create that obstacle
             }
 
-            curTime = 0;
+            cur_time = 0;
         }
-
     }
+
 }

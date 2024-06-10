@@ -19,9 +19,14 @@ public class PlayerController : MonoBehaviour
 
     public int curHealth;
 
+    public int curBonus;
+
     private GameObject healthTextObject;
 
+    private GameObject bonusTextObject;
+
     public AudioSource hitSound;
+    public AudioSource bonusSound;
 
     private float startXPos;
     // Start is called before the first frame update
@@ -31,6 +36,7 @@ public class PlayerController : MonoBehaviour
         curHealth = startHealth;
 
         healthTextObject = GameObject.FindGameObjectsWithTag("HealthDisplay")[0];
+        bonusTextObject = GameObject.FindGameObjectsWithTag("BonusDisplay")[0];
     }
 
     // Update is called once per frame
@@ -57,14 +63,15 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Adds the given health to the players current health
+    /// Adds the given bonus to the players current bonus
     /// </summary>
-    /// <param name="health">health which will get added</param>
-    public void AddHealth(int health)
+    /// <param name="bonus">bonus which will get added</param>
+    public void AddBonus(int bonus)
     {
-        curHealth += health;
+        curBonus += bonus;
+        bonusSound.Play();
 
-        healthTextObject.GetComponent<TMPro.TextMeshProUGUI>().SetText("Health: " + curHealth);
+        bonusTextObject.GetComponent<TMPro.TextMeshProUGUI>().SetText("" + curBonus);
     }
 
     /// <summary>
@@ -75,7 +82,7 @@ public class PlayerController : MonoBehaviour
     {
         curHealth -= health;
         hitSound.Play();
-        healthTextObject.GetComponent<TMPro.TextMeshProUGUI>().SetText("Health: " + curHealth);
+        healthTextObject.GetComponent<TMPro.TextMeshProUGUI>().SetText("" + curHealth);
 
         if(curHealth <= 0)
         {
