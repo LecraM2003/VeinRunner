@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -86,6 +88,41 @@ public class PlayerController : MonoBehaviour
 
         if(curHealth <= 0)
         {
+            // load player name - entered in main menu
+            string player_name = PlayerPrefs.GetString("PlayerName");
+            
+            // create datatable for easy sorting
+            DataTable dt = new DataTable();
+            // define columns
+            dt.Columns.Add("player");
+            dt.Columns.Add("score");
+            // set data type of score column to int
+            dt.Columns["score"].DataType = Type.GetType("System.Int32");
+
+            // get already stored data from past games
+            for (int i = 0; i < 10; i++)
+            {
+                DataRow irow = dt.NewRow();
+                irow["player"] = PlayerPrefs.GetString("score_name_" + i);
+                irow["score"] = PlayerPrefs.GetInt("score_points_" + i);
+                dt.Rows.Add(irow);
+            }
+
+            // add score of current game
+            DataRow row = dt.NewRow();
+            row["player"] = player_name;
+            row["score"] = curBonus;
+            dt.Rows.Add(row);
+
+            // sort by score (descending)
+            DataRow[] sorted_rows = dt.Select("", "score DESC");
+            // store best 10 scores for later display
+            for (int i = 0; i < 10; i++)
+            {
+                PlayerPrefs.SetString("score_name_" + i, sorted_rows[i]["player"].ToString());
+                PlayerPrefs.SetInt("score_points_" + i, Int32.Parse(sorted_rows[i]["score"].ToString()));
+            }
+
             SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
         }
     }
