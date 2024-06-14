@@ -23,9 +23,17 @@ public class PlayerController : MonoBehaviour
 
     public int curBonus;
 
+    private int counter = 0;
+
+    ParticleSystem myParticleSystem;
+    ParticleSystem.EmissionModule emissionModule;
+    public bool once = true;
+
     private GameObject healthTextObject;
 
     private GameObject bonusTextObject;
+
+    private GameObject playerSprite;
 
     public AudioSource hitSound;
     public AudioSource bonusSound;
@@ -39,11 +47,25 @@ public class PlayerController : MonoBehaviour
 
         healthTextObject = GameObject.FindGameObjectsWithTag("HealthDisplay")[0];
         bonusTextObject = GameObject.FindGameObjectsWithTag("BonusDisplay")[0];
+        playerSprite = GameObject.Find("Player/playerSprite");
+        myParticleSystem = GetComponent<ParticleSystem>();
+        emissionModule = myParticleSystem.emission;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (counter != 0) {
+            counter--;
+            if (counter == 0) {
+                var renderer = playerSprite.GetComponent<Renderer>();
+                Color customColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                renderer.material.SetColor("_Color", customColor);
+                emissionModule.enabled=false;
+            }
+        }
+
         if (transform.position.x != targetPos.x)
         {
             transform.position = Vector2.MoveTowards(transform.position, targetPos, movementSpeed * Time.deltaTime);
@@ -85,7 +107,14 @@ public class PlayerController : MonoBehaviour
         curHealth -= health;
         hitSound.Play();
         healthTextObject.GetComponent<TMPro.TextMeshProUGUI>().SetText("" + curHealth);
-
+         //Particle System
+        
+        emissionModule.enabled=true;
+        myParticleSystem.Play();
+        var renderer = playerSprite.GetComponent<Renderer>();
+        Color customColor = new Color(1.0f, 0.1f, 0.1f, 1.0f);
+        renderer.material.SetColor("_Color", customColor);
+        counter = 100;
         if(curHealth <= 0)
         {
             // load player name - entered in main menu
