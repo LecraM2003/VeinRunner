@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1541b43f97b101b4eb8fe88bbda3e453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoPlayer: {fileID: 0}
+  videoPlayer: {fileID: 239285916}
   nextSceneName: Leaderboard
 --- !u!1 &862764100
 GameObject:
