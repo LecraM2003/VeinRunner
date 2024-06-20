@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
         var renderer = playerSprite.GetComponent<Renderer>();
         Color customColor = new Color(1.0f, 0.1f, 0.1f, 1.0f);
         renderer.material.SetColor("_Color", customColor);
-        counter = 100;
+        counter = 25;
         if(curHealth <= 0)
         {
             // load player name - entered in main menu
