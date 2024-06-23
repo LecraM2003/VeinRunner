@@ -33,13 +33,13 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.spawnGameObject(obstacleObject, ref obstacle_curTime, 350, 75);
+        this.spawnGameObject(obstacleObject, ref obstacle_curTime, 60, 85);
 
         if (how_many == 0)
         {
             how_many = Random.Range(1, 5);
         }
-        this.spawnGameObject(bonusObject, ref bonus_curTime, 100, 50, true);
+        this.spawnGameObject(bonusObject, ref bonus_curTime, 20, 50, true);
 
         // frame_counter++;
     }
