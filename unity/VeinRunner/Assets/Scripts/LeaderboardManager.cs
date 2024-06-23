@@ -1,12 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LeaderboardManager : MonoBehaviour
 {
 
     public GameObject boardTextObject;
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+    public void BackToMain()
+    {
+        SceneManager.LoadScene(0);
+    }
 
+    public void ClearLeaderboard()
+    {
+        PlayerPrefs.DeleteAll();
+        boardTextObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +45,5 @@ public class LeaderboardManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 }
