@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -93,7 +94,9 @@ public class PlayerController : MonoBehaviour
     public void AddBonus(int bonus)
     {
         curBonus += bonus;
-        bonusSound.Play();
+
+        AudioSource newSound = Instantiate(bonusSound);
+        newSound.Play();
 
         bonusTextObject.GetComponent<TMPro.TextMeshProUGUI>().SetText("" + curBonus);
     }

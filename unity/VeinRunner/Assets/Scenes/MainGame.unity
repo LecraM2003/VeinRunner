@@ -219,6 +219,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1216508395839690548, guid: 0feaee9326269584d88ab29384ece5fb, type: 3}
+      propertyPath: destroyCount
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1388657328263943427, guid: 0feaee9326269584d88ab29384ece5fb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -263,12 +267,27 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4070176125850796390, guid: 0feaee9326269584d88ab29384ece5fb, type: 3}
+      propertyPath: bonusSound
+      value: 
+      objectReference: {fileID: 2912294846935390382, guid: 1d9422518452b6340a208c1269fe4a4d, type: 3}
+    - target: {fileID: 4267621784905726859, guid: 0feaee9326269584d88ab29384ece5fb, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b5b916dc60773a4dad074512b947a8c, type: 3}
+    - target: {fileID: 5540445775763116845, guid: 0feaee9326269584d88ab29384ece5fb, type: 3}
+      propertyPath: m_Name
+      value: bonusSoundOLD
+      objectReference: {fileID: 0}
     - target: {fileID: 9191940967406141902, guid: 0feaee9326269584d88ab29384ece5fb, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 5540445775763116845, guid: 0feaee9326269584d88ab29384ece5fb, type: 3}
+    - {fileID: 6158340263852680504, guid: 0feaee9326269584d88ab29384ece5fb, type: 3}
+    - {fileID: 7447701744819866530, guid: 0feaee9326269584d88ab29384ece5fb, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9191940967406141902, guid: 0feaee9326269584d88ab29384ece5fb, type: 3}
