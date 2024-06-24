@@ -5,9 +5,14 @@ using UnityEngine;
 public class SpawnPoint : MonoBehaviour
 {
 
-    bool locked = false;
+    private bool locked = false;
 
-    int locked_for = 0;
+    private int locked_for = 0;
+
+    // public int sp_id = -1;
+
+    // int frame_counter = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +25,9 @@ public class SpawnPoint : MonoBehaviour
     {
         if (this.locked)
         {
-            if (this.locked_for >= 30)
+            if (this.locked_for >= 200)
             {
+                // Debug.Log("unlocking point " + sp_id);
                 this.locked = false;
                 this.locked_for = 0;
             }
@@ -30,16 +36,27 @@ public class SpawnPoint : MonoBehaviour
                 this.locked_for++;
             }
         }
+
+        // frame_counter++;
     }
 
-    public void lockPoint()
+    public bool lockPoint()
     {
+        if (this.locked)
+        {
+            return false;
+        }
+
+        // Debug.Log("lane " + sp_id + " is being locked for " + d_type + " (frame " + frame_counter + ")");
         this.locked = true;
         this.locked_for = 0;
+
+        return true;
     }
 
     public bool isLocked()
     {
+        // Debug.Log("lane " + sp_id + " is" + (!this.locked ? " not" : "") + " locked for " + d_type + " (frame " + frame_counter + ")");
         return this.locked;
     }
 

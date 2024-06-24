@@ -21,6 +21,9 @@ public class Spawner : MonoBehaviour
 
     int force_lane = -1;
 
+    // int frame_counter = 0;
+
+
     void Start()
     {
         obstacle_curTime = 0;
@@ -30,23 +33,30 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.spawnGameObject(obstacleObject, ref obstacle_curTime, 500, 90);
+        this.spawnGameObject(obstacleObject, ref obstacle_curTime, 60, 85);
 
         if (how_many == 0)
         {
             how_many = Random.Range(1, 5);
         }
-        this.spawnGameObject(bonusObject, ref bonus_curTime, 60, 50, true);
+        this.spawnGameObject(bonusObject, ref bonus_curTime, 20, 50, true);
+
+        // frame_counter++;
     }
 
     void spawnGameObject(GameObject gameObject, ref int cur_time, int mindelay, int min_chance, bool multi = false)
     {
         cur_time++;
 
+        bool first_or_single = true;
         if (multi && how_many_done >= 1)
         {
             // decrease vertical gap within groups
-            mindelay = 3;
+            mindelay = 40;
+            // must spawn next in group
+            min_chance = 101;
+
+            first_or_single = false;
         }
 
         if (cur_time >= mindelay)
@@ -57,30 +67,46 @@ public class Spawner : MonoBehaviour
             {
                 GameObject spawnPoint;
                 int tries = 0;      // safety pin to prevent deadlocks
-                int randSpawnpoint;
+                int randSpawnpoint = -1;
                 do
                 {
+                    /*
+                    if (tries > 0)
+                    {
+                        Debug.Log("lane " + randSpawnpoint + " locked, retry #" + tries + " (frame " + frame_counter + ")");
+                    }
+                    */
+
                     if (multi && force_lane > -1)
                     {
+                        // forced lane active
                         randSpawnpoint = force_lane;
                     }
                     else
                     {
+                        // find new lane
                         randSpawnpoint = Random.Range(0, spawnPoints.transform.childCount);
                     }
-                    
-                    if (multi && how_many > 1 && how_many_done == 0)
-                    {
-                        force_lane = randSpawnpoint;
-                    }
+
+                    // Debug.Log("trying to spawn " + d_type + " on lane " + randSpawnpoint + (multi && how_many_done >= 1 ? " (existing group)" : "") + " (frame " + frame_counter + ")");
 
                     spawnPoint = spawnPoints.transform.GetChild(randSpawnpoint).gameObject;
+                    // spawnPoint.GetComponent<SpawnPoint>().sp_id = randSpawnpoint;
                     tries++;
                 }
-                while ((!multi || force_lane < 0) && spawnPoint.GetComponent<SpawnPoint>().isLocked() && tries < 10);
-                tries = 0;
+                while (
+                    first_or_single
+                    && spawnPoint.GetComponent<SpawnPoint>().isLocked()
+                    && tries < 20
+                );
 
                 spawnPoint.GetComponent<SpawnPoint>().lockPoint();
+
+                if (multi && how_many > 1 && how_many_done == 0)
+                {
+                    // first of a group
+                    force_lane = randSpawnpoint;
+                }
 
                 if (multi)
                 {
